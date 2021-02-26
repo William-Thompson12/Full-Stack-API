@@ -4,10 +4,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         },
         expense: {
-            type: Sequelize.ARRAY
+            type: Sequelize.ARRAY(Sequelize.INTEGER)
         },
         income: {
-            type: Sequelize.ARRAY
+            type: Sequelize.ARRAY(Sequelize.INTEGER)
         },
         description: {
             type: Sequelize.STRING

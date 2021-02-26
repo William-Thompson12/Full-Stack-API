@@ -7,7 +7,7 @@ exports.create = (req, res) => {
     // Validate request
     if (!req.body.name) {
         res.status(400).send({
-          message: "Request validated"
+          message: "Content can not be empty" + `${req}`
         });
         return;
       }
@@ -90,7 +90,7 @@ exports.update = (req, res) => {
 
 // Delete a User with the specified id in the request
 exports.delete = (req, res) => {
-    const id = req.params.id;
+    const userToken = req.params.id;
 
     User.destroy({
         where: { userToken: userToken }

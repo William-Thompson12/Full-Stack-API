@@ -53,8 +53,8 @@ exports.findAll = (req, res) => {
 
 // Update a Budget by the id in the request
 exports.update = (req, res) => {
-    const name = req.params.name;
-    const userToken = req.params.userToken;
+    const name = req.body.name;
+    const userToken = req.body.userToken;
 
     Budget.update(req.body, {
       where: { userToken: userToken, name: name}
@@ -79,5 +79,26 @@ exports.update = (req, res) => {
 
 // Delete a Budget with the specified id in the request
 exports.delete = (req, res) => {
-  
+  const name = req.body.name;
+  const userToken = req.body.userToken;
+
+  Budget.destroy({
+    where: { userToken: userToken, name: name}
+  })
+  .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "User was deleted successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot delete User with id=${userToken}.`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Tutorial with id=" + userToken
+      });
+  });
 };
