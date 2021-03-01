@@ -1,22 +1,11 @@
 const db = require("../models");
-const Budget = db.budget;
+const Budget = db.budgets;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Budget
 exports.create = (req, res) => {
     // Validate request
-    // Validate request
-  if (!req.body.name) {
-    res.status(400).send({
-      message: "Name can not be empty" 
-    });
-    return;
-  } else if (!req.body.description) {
-    res.status(400).send({
-      message: "Email can not be empty" 
-    });
-    return;
-  } else if (!req.body.userToken) {
+  if (!req.body.userToken) {
     res.status(400).send({
       message: "UserToken can not be empty" 
     });
@@ -24,11 +13,12 @@ exports.create = (req, res) => {
   }
   // Create a user
   const budget = {
-      name: req.body.name,
-      expense: req.body.expense || [],
-      income: req.body.income || [],
-      description: req.body.description,
-      userToken: req.body.userToken
+    name: req.body.name,
+    expense: req.body.expense || [],
+    income: req.body.income || [],
+    description: req.body.description,
+    userToken: req.body.userToken,
+    budgetId: req.body.name + req.body.userToken
   };
   // Save User in the database
   Budget.create(budget)
@@ -44,9 +34,8 @@ exports.create = (req, res) => {
 };
 // Retrieve all Budgets from a user in the database.
 exports.findAll = (req, res) => {
-  const userToken = req.query.userToken;
-  var condition = userToken ? { userToken: userToken } : null;
-  Budget.findAll({ where: condition })
+  const userToken = req.params.id;
+  Budget.findAll({where: { userToken: userToken } })
   .then(data => {
       res.send(data);
   })
@@ -59,10 +48,9 @@ exports.findAll = (req, res) => {
 };
 // Update a Budget by the id in the request
 exports.update = (req, res) => {
-  const name = req.body.name;
-  const userToken = req.body.userToken;
+  const budgetId = req.body.budgetId;
   Budget.update(req.body, {
-    where: { userToken: userToken, name: name}
+    where: { budgetId: budgetId}
   })
   .then(num => {
     if (num == 1) {
@@ -71,7 +59,7 @@ exports.update = (req, res) => {
       });
     } else {
       res.send({
-        message: `Cannot update Budget "${name}" with id=${userToken}. Maybe User was not found or req.body is empty!`
+        message: `Cannot update Budget "${budgetId}" with id=${userToken}. Maybe User was not found or req.body is empty!`
       });
     }
   })
@@ -83,23 +71,22 @@ exports.update = (req, res) => {
 };
 // Delete a Budget with the specified id in the request
 exports.delete = (req, res) => {
-  const name = req.body.name;
-  const userToken = req.body.userToken;
-  Budget.destroy({ where: { userToken: userToken, name: name }})
+  const budgetId = req.body.budgetId;
+  Budget.destroy({ where: { budgetId: budgetId }})
   .then(num => {
       if (num == 1) {
         res.send({
-          message: "User was deleted successfully."
+          message: "Budget was deleted successfully."
         });
       } else {
         res.send({
-          message: `Cannot delete User with id=${userToken}.`
+          message: `Cannot delete Budget with id=${userToken}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Tutorial with id=" + userToken
+        message: "Error Deleteing Budget with id=" + userToken + err
       });
   });
 };

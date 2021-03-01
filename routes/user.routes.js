@@ -9,13 +9,13 @@ module.exports = app => {
     // Retrieve all Users
     router.get("/", users.findAll);
   
-    // Retrieve a single Users with id
+    // Retrieve a single User with id
     router.get("/:id", users.findOne);
   
-    // Update a Users with id
+    // Update a User with id
     router.put("/:id", users.update);
   
-    // Delete a Users with id
+    // Delete a User with id
     router.delete("/:id", users.delete);
   
     app.use('/api/users', router);

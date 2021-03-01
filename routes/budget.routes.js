@@ -6,8 +6,8 @@ module.exports = app => {
     // Create a new budget
     router.post("/", budgets.create);
   
-    // Retrieve all budget
-    router.get("/", budgets.findAll);
+    // Retrieve all budgets
+    router.get("/:id", budgets.findAll);
     
     // Update a budget with id
     router.put("/:id", budgets.update);

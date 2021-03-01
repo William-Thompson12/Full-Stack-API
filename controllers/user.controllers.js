@@ -67,7 +67,7 @@ exports.findOne = (req, res) => {
 };
 // Update a User by the id in the request
 exports.update = (req, res) => {
-  const userToken = req.params.userToken;
+  const userToken = req.params.id;
   User.update(req.body, {
     where: { userToken: userToken }
   })
@@ -84,7 +84,7 @@ exports.update = (req, res) => {
   })
   .catch(err => {
     res.status(500).send({
-      message: "Error updating Tutorial with id=" + userToken
+      message: "Error updating User with id=" + userToken + err
     });
   });
 };
@@ -107,7 +107,7 @@ exports.delete = (req, res) => {
   })
   .catch(err => {
     res.status(500).send({
-      message: "Error updating Tutorial with id=" + userToken
+      message: "Error deleting User with id=" + userToken + err
     });
   });
 };

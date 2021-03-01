@@ -3,6 +3,9 @@ module.exports = (sequelize, Sequelize) => {
         name: {
             type: Sequelize.STRING
         },
+        budgetId: {
+            type: Sequelize.STRING
+        },
         expense: {
             type: Sequelize.ARRAY(Sequelize.INTEGER)
         },
@@ -10,6 +13,9 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.ARRAY(Sequelize.INTEGER)
         },
         description: {
+            type: Sequelize.STRING
+        },
+        userToken: {
             type: Sequelize.STRING
         }
     });
