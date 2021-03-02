@@ -48,7 +48,7 @@ exports.findAll = (req, res) => {
 };
 // Update a Budget by the id in the request
 exports.update = (req, res) => {
-  const budgetId = req.body.budgetId;
+  const budgetId = req.params.id;
   Budget.update(req.body, {
     where: { budgetId: budgetId}
   })
