@@ -21,5 +21,6 @@ db.sequelize = sequelize;
 
 db.users = require("./user.models.js")(sequelize, Sequelize);
 db.budgets = require("./budget.models.js")(sequelize, Sequelize);
+db.transactions = require("./transaction.models.js")(sequelize, Sequelize);
 
 module.exports = db;
