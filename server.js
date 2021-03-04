@@ -6,7 +6,7 @@ const app = express();
 const db = require("./models");
 
 var corsOptions = {
-  origin: "https://full-budget-tool.herokuapp.com/"
+  origin: "http://localhost:3000/"
 };
 
 db.sequelize.sync({ force: true }).then(() => {
